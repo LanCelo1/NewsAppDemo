@@ -8,6 +8,7 @@ import android.widget.SimpleAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import uz.gita.newsappdemo.MainActivity
 import uz.gita.newsappdemo.R
@@ -32,22 +33,27 @@ class NewsPage : Fragment(R.layout.page_news) {
 
         binding.apply {
             recyclerView.apply {
-                adapter = newsAdapter
+                adapter = newsAdapter.apply {
+                    this.onItemClickListener {
+                        findNavController().navigate(NewsPageDirections.actionNewsPageToArticlePage(it))
+                    }
+                }
                 layoutManager = LinearLayoutManager(this@NewsPage.context)
+
             }
         }
-        try {
+      /*  try {
             activity?.registerReceiver(
                 myWifiChanged,
                 IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION)
             )
         } catch (e: Exception) {
             showMessage(e.message ?: "Xatolik WiFi")
-        }
+        }*/
 
-        checkInternetConnection()
+       // checkInternetConnection()
 
-        viewModel.getCommonNews("us")
+        viewModel.safeBreakingNewsCall("us")
 
         viewModel.getNewsLiveData.observe(this, getNewsObserver)
     }

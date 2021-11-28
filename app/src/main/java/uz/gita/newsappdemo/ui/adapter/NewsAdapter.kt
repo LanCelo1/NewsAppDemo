@@ -1,5 +1,6 @@
 package uz.gita.newsappdemo.ui.adapter
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -23,6 +24,8 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.VH>() {
         fun bind() {
             val item = asyncList.currentList[adapterPosition]
             binding.apply {
+                titleNew.isSelected = true
+                titleNew.ellipsize = TextUtils.TruncateAt.MARQUEE
                 titleNew.text = item.title
                 Glide.with(root).load(item.urlToImage).into(imageNew)
             }
@@ -40,7 +43,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.VH>() {
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<Article>() {
             override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-                return oldItem.source.id == newItem.source.id
+                return oldItem.source?.id == newItem.source?.id
             }
 
             override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {

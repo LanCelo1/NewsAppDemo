@@ -3,11 +3,11 @@ package uz.gita.newsappdemo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import uz.gita.newsappdemo.databinding.ActivityMainBinding
 import uz.gita.newsappdemo.R.id.host_fragment_container
+import uz.gita.newsappdemo.data.local.room.NewDatabase
 import uz.gita.newsappdemo.data.repository.NewsRepository
 import uz.gita.newsappdemo.ui.presenter.NewsViewModel
 import uz.gita.newsappdemo.ui.presenter.ViewModelProviderFactory
@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
         /**
          * Configure viewModel
          * */
-        val repository = NewsRepository()
+        var db = NewDatabase.getInstance(App.instance)
+        val repository = NewsRepository(db)
         viewModel = ViewModelProvider(this,ViewModelProviderFactory(repository))[NewsViewModel::class.java]
 
 

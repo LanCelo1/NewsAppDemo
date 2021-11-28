@@ -11,16 +11,25 @@ import uz.gita.newsappdemo.utils.TypeConventors
 
 @Database(entities = [Article::class], version = 1)
 @TypeConverters(TypeConventors::class)
-abstract class RoomDatabase : RoomDatabase() {
+abstract class NewDatabase : RoomDatabase() {
     abstract fun newDao() : NewDao
 
     companion object{
         @Volatile
-        lateinit var INSTANCE : RoomDatabase
+        private var INSTANCE : NewDatabase? = null
 
-        fun getInstance(app: App) : RoomDatabase{
+        /*fun getInstance(app: App) : NewDatabase{
             return INSTANCE ?: synchronized(this){
-                var temp = Room.databaseBuilder(app.applicationContext,RoomDatabase::class.java,"news_database")
+                var temp = Room.databaseBuilder(app.applicationContext,NewDatabase::class.java,"news_database")
+                    .build()
+                INSTANCE =temp
+                temp
+            }
+        }*/
+        fun getInstance(context : Context) : NewDatabase{
+            return INSTANCE ?: synchronized(this){
+                var temp = Room.databaseBuilder(context.applicationContext,
+                    NewDatabase::class.java,"news_database")
                     .build()
                 INSTANCE = temp
                 temp

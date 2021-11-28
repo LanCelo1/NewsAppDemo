@@ -29,8 +29,13 @@
         app:layout_constraintTop_toTopOf="@+id/image_new" />
 
     <TextView
+        android:marqueeRepeatLimit="marquee_forever"
+        android:focusable="true"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:scrollHorizontally="true"
         android:id="@+id/title_new"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="16dp"

@@ -9,13 +9,33 @@
         tools:layout="@layout/page_news"
         android:id="@+id/newsPage"
         android:name="uz.gita.newsappdemo.ui.page.NewsPage"
-        android:label="NewsPage" />
+        android:label="NewsPage" >
+        <action
+            android:id="@+id/action_newsPage_to_articlePage"
+            app:destination="@id/articlePage" />
+    </fragment>
     <fragment
         android:id="@+id/searchPage"
         android:name="uz.gita.newsappdemo.ui.page.SearchPage"
-        android:label="SearchPage" />
+        android:label="SearchPage" >
+        <action
+            android:id="@+id/action_searchPage_to_articlePage"
+            app:destination="@id/articlePage" />
+    </fragment>
     <fragment
         android:id="@+id/savedNewsPage"
         android:name="uz.gita.newsappdemo.ui.page.SavedNewsPage"
-        android:label="SavedNewsPage" />
+        android:label="SavedNewsPage" >
+        <action
+            android:id="@+id/action_savedNewsPage_to_articlePage"
+            app:destination="@id/articlePage" />
+    </fragment>
+    <fragment
+        android:id="@+id/articlePage"
+        android:name="uz.gita.newsappdemo.ui.page.ArticlePage"
+        android:label="ArticlePage" >
+        <argument
+            android:name="navArgs"
+            app:argType="uz.gita.newsappdemo.data.model.Article" />
+    </fragment>
 </navigation>
