@@ -14,6 +14,7 @@ interface ApiInterface {
     @GET("top-headlines")
     fun getTopHeadlineNews(
         @Query("country") country: String,
+        @Query("page") page : Int = 1,
         @Query("apiKey") apiKey: String = "3347d1feb4fb4ac6a56a1f4af963e73c",
     ): Call<ResponseNews>
 
@@ -25,6 +26,7 @@ interface ApiInterface {
     @GET("everything")
     fun searchNews(
         @Query("q") search: String,
+        @Query("page") page : Int = 1,
         @Query("apiKey") apiKey: String = "3347d1feb4fb4ac6a56a1f4af963e73c",
     ): Call<ResponseNews>
 }

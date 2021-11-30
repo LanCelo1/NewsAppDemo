@@ -1,22 +1,15 @@
 package uz.gita.newsappdemo.ui.presenter
 
-import android.app.Application
 import android.content.Context
-import android.graphics.Bitmap
-import android.media.audiofx.DynamicsProcessing
 import android.net.ConnectivityManager
 import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
 import android.os.Build
-import android.util.Config
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -25,19 +18,19 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 import uz.gita.newsappdemo.App
-import uz.gita.newsappdemo.MainActivity
 import uz.gita.newsappdemo.data.model.Article
 import uz.gita.newsappdemo.data.model.ResponseNews
-import uz.gita.newsappdemo.data.repository.NewsRepository
+import uz.gita.newsappdemo.data.repository.NewsRepositoryImpl
 import java.io.IOException
 import java.lang.Exception
 
+
 class NewsViewModel(
-    private var repository: NewsRepository,
+    private var repository: NewsRepositoryImpl,
 ) : ViewModel() {
 
-    init {
-        getCommonNews("us")
+    /*init {
+        getSafeNews("us")
         getSavedNews()
         Timber.tag("TTT").d("viewMOdel is work  ")
     }
@@ -131,7 +124,7 @@ class NewsViewModel(
 
     fun getSavedNews() = viewModelScope.launch(Dispatchers.IO) {
         try{
-            saveNewsLiveData = repository.getSavedNews()
+          // saveNewsLiveData = repository.getSavedNews()
         } catch (e : Exception){
             Timber.tag("TTT").d("error getSavedNews ${e.message}")
         }
@@ -154,9 +147,7 @@ class NewsViewModel(
         }
     }
 
-    fun safeSearchNewsCall(searchQuery: String) {
-      //  newSearchQuery = searchQuery
-//        _searchNewsLiveData.postValue(ResultData.Loading())
+    fun getSafeSearchNews(searchQuery: String) {
         try {
             if(hasInternetConnection()) {
                 searchNews(searchQuery)
@@ -175,10 +166,10 @@ class NewsViewModel(
         }
     }
 
-    fun safeBreakingNewsCall(countryCode: String) {
+    fun getSafeNews(countryCode: String) {
         try {
             if(hasInternetConnection()) {
-               getCommonNews("us")
+               getCommonNews(countryCode)
             } else {
                _getNewsLiveData.postValue(ResultData.Error(null,"No internet connection"))
             }
@@ -218,7 +209,7 @@ class NewsViewModel(
             }
         }
         return false
-    }
+    }*/
 }
 
 sealed class ResultData<T>(
@@ -227,4 +218,5 @@ sealed class ResultData<T>(
 ) {
     class Success<T>(data: T) : ResultData<T>(data)
     class Error<T>(data: T? = null, message: String) : ResultData<T>(data, message)
+    class Loading<T>(data : T? =null, message: String?) : ResultData<T>()
 }

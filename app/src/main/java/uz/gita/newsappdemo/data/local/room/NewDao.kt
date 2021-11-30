@@ -9,7 +9,7 @@ import uz.gita.newsappdemo.data.model.Article
 interface NewDao {
 
     @Query("SELECT * FROM articles")
-    fun getAll() : LiveData<List<Article>>
+    fun getAll() : List<Article>
 
     @Delete
     fun delete(article: Article)

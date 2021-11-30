@@ -1,53 +1,20 @@
 package uz.gita.newsappdemo.data.repository
 
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import retrofit2.Call
-import timber.log.Timber
-import uz.gita.newsappdemo.data.local.room.NewDatabase
 import uz.gita.newsappdemo.data.model.Article
 import uz.gita.newsappdemo.data.model.ResponseNews
-import uz.gita.newsappdemo.data.remote.retrofit.ApiInterface
-import uz.gita.newsappdemo.data.remote.retrofit.ApiService
 
-class NewsRepository(
-    private var db : NewDatabase
-) {
-    private var api = ApiService.retrofit.create(ApiInterface::class.java)
+interface NewsRepository {
 
-    fun getAllNews(country: String): Flow<Call<ResponseNews>> = flow {
-        Timber.tag("TTT").d("repository is work ")
-        emit(api.getTopHeadlineNews(country))
-    }
+    fun getAllNews(country : String,page : Int) : Flow<Call<ResponseNews>>
 
+    fun addNews(article: Article) : Long
 
-    fun searchNews(search: String): Flow<Call<ResponseNews>> = flow {
-        emit(api.searchNews(search))
-    }
+    fun delete(article: Article)
 
-    fun addNews(article: Article) =
-        db.newDao().insertNews(article)
+    fun searchNews(search :String, pages :Int) : Flow<Call<ResponseNews>>
 
-    fun getSavedNews()  = db.newDao().getAll()
-
-    fun delete(article : Article) =db.newDao().delete(article)
+    fun getSavedNews() : List<Article>
 }
-
-
-
-/*
-* .enqueue(object : Callback<ResponseNews>{
-            override fun onResponse(call: Call<ResponseNews>, response: Response<ResponseNews>) {
-                if (response.isSuccessful){
-                    response.body()?.let {
-                        emit(ResultData.Success(it.articles))
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseNews>, t: Throwable) {
-                emit(ResultData.Error(t.message!!))
-            }
-
-        })
-* */
