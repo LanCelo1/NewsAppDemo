@@ -14,18 +14,18 @@ import uz.gita.newsappdemo.utils.TypeConventors
 abstract class NewDatabase : RoomDatabase() {
     abstract fun newDao() : NewDao
 
-    companion object{
+    /*companion object{
         @Volatile
         private var INSTANCE : NewDatabase? = null
 
-        /*fun getInstance(app: App) : NewDatabase{
+        *//*fun getInstance(app: App) : NewDatabase{
             return INSTANCE ?: synchronized(this){
                 var temp = Room.databaseBuilder(app.applicationContext,NewDatabase::class.java,"news_database")
                     .build()
                 INSTANCE =temp
                 temp
             }
-        }*/
+        }*//*
         fun getInstance(context : Context) : NewDatabase{
             return INSTANCE ?: synchronized(this){
                 var temp = Room.databaseBuilder(context.applicationContext,
@@ -35,5 +35,5 @@ abstract class NewDatabase : RoomDatabase() {
                 temp
             }
         }
-    }
+    }*/
 }
